@@ -2,20 +2,27 @@ import express from 'express'
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
-import { Requester } from './src';
+import { Requester, PathFinder } from './src';
+
+/**
+ * TUTO zadame co hladame
+ */
+const productsToFind = [
+    'product-1', 
+    'product-2',
+    'product-3',
+]
 
 const app = express();
-const requester = new Requester()
-app.use(cors());
-app.use(bodyParser.json());
+const pathFinder = new PathFinder()
 
 
 app.get("/", (req: any, res: any) => {
-    const data = requester.getProductInfo('product-1').then((value) => {
-        
-        console.log('value:', value)
-        
+    
+    pathFinder.findPath(productsToFind).then((result)=> {
+        console.log(result)
     })
+    
     
     res.send("This is the homepage");
 });

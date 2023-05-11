@@ -1,5 +1,6 @@
 import axios from "axios";
 import { config } from "../../config";
+import { ProuctInfoApi } from "..";
 
 export class Requester{
     async getProductInfo(productId:string) {
@@ -7,7 +8,7 @@ export class Requester{
             throw new Error('Please add api key into config.ts')
         }
         try {
-          const { data, status } = await axios.get<any>(
+          const { data, status } = await axios.get<ProuctInfoApi[]>(
             `https://dev.aux.boxpi.com/case-study/products/${productId}/positions`,
             {
               headers: {
@@ -15,8 +16,7 @@ export class Requester{
               },
             }
           );
-          console.log(JSON.stringify(data, null, 4));
-          console.log("response status is: ", status);
+          
           return data;
         } catch (error) {
           if (axios.isAxiosError(error)) {
